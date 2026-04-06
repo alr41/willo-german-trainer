@@ -3,9 +3,10 @@
 const API_URL = "http://127.0.0.1:8000/api";
 
 
-export async function getVocabQuestion(level) {
+export async function getVocabQuestion(level, seen = []) {
   try {
-    const response = await fetch(`${API_URL}/word/quiz?level=${level}`);
+    const seenParam = seen.length > 0 ? `&seen=${seen.join(",")}` : "";
+    const response = await fetch(`${API_URL}/word/quiz?level=${level}${seenParam}`);
     if (!response.ok) throw new Error("No words found");
     return await response.json();
   } catch (error) {
@@ -42,7 +43,6 @@ export async function getArticleWord(level) {
     return null;
   }
 }
-
 
 export async function submitArticleAnswer(wordId, userChoice, mode, lives) {
   const payload = {
