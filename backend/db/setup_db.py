@@ -67,7 +67,10 @@ def create_tables(conn):
     )
     ''')
 
-    def seed_data(conn):
+    conn.commit()
+    cursor.close()
+
+def seed_data(conn):
     cursor = conn.cursor()
     cursor.executemany(
         "INSERT IGNORE INTO articles (id, artikel) VALUES (%s, %s)",
