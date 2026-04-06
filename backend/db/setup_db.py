@@ -55,7 +55,7 @@ def create_tables(conn):
     ''')
 
     cursor.execute('''
-    CREATE TABLE user_word_stats (
+    CREATE TABLE IF NOT EXISTS user_word_stats (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT DEFAULT 1,
         word_id INT,
@@ -67,13 +67,24 @@ def create_tables(conn):
     )
     ''')
 
+    def seed_data(conn):
+    cursor = conn.cursor()
+    cursor.executemany(
+        "INSERT IGNORE INTO articles (id, artikel) VALUES (%s, %s)",
+        [(1, 'der'), (2, 'die'), (3, 'das')]
+    )
+    cursor.executemany(
+        "INSERT IGNORE INTO levels (level) VALUES (%s)",
+        [('A1',), ('A2',), ('B1',), ('B2',), ('C1',), ('C2',)]
+    )
+
     conn.commit()
     cursor.close()
-    print("Tables created successfully.")
 
 if __name__ == "__main__":
-    print("Testing table creation...")
     conn = connect_db()
     if conn:
         create_tables(conn)
+        seed_data(conn)
         conn.close()
+        print("Setup complete!")
