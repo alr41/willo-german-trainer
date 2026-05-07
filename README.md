@@ -63,6 +63,12 @@ mysql -u root -p < database_dump.sql
 
 This creates the `german_db` database and imports all tables and vocabulary data automatically.
 
+If `mysql` is not recognized, use:
+
+```bash
+"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe" -u root -p < database_dump.sql
+```
+
 ### 3. Install backend dependencies
 
 ```bash
